@@ -1,0 +1,64 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+model User {
+  id           String          @id @default(uuid())
+  email        String          @unique
+  passwordHash String
+  role         String          @default("USER") // USER | ADMIN
+  created_at    DateTime        @default(now())
+  updated_at    DateTime        @updatedAt
+
+  transactions Transaction[]
+  payment_methods Payment_Method[]
+}
+
+model Transaction {
+  id        String   @id @default(uuid())
+  user      User     @relation(fields: [user_id], references: [id])
+  user_id    String
+  amount    Decimal  @db.Decimal(14,2)
+  currency  String   // e.g. "MXN", "USD"
+  status    String   // PENDING | AUTHORIZED | SETTLED | FAILED | REFUNDED
+  reference String   @unique
+  metadata  Json?
+  created_at DateTime @default(now())
+
+  payment   Payment?
+}
+
+model Payment_Method {
+  id             String   @id @default(uuid())
+  user           User     @relation(fields: [user_id], references: [id])
+  user_id         String
+  brand          String   // VISA/MASTERCARD/etc o WALLET
+  last4          String
+  token_encrypted Bytes
+  iv             Bytes
+  created_at      DateTime @default(now())
+
+  payments       Payment[]
+}
+
+model Payment {
+  id              String         @id @default(uuid())
+  transaction     Transaction    @relation(fields: [transaction_id], references: [id])
+  transaction_id   String @unique
+  payment_method   Payment_Method  @relation(fields: [payment_method_id], references: [id])
+  payment_method_id String
+  status          String         // AUTHORIZED | CAPTURED | FAILED | REFUNDED
+  provider_ref     String?        // id devuelto por gateway
+  created_at       DateTime       @default(now())
+}
+
