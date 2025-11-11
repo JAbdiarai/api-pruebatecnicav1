@@ -18,13 +18,3 @@ export function encryptToBuffer(plain: string) {
   const tag = cipher.getAuthTag();
   return { ciphertext: Buffer.concat([enc, tag]), iv };
 }
-
-export function decryptFromBuffer(ciphertext: Buffer, iv: Buffer) {
-  const tagLen = authTagLength;
-  const data = ciphertext.subarray(0, ciphertext.length - tagLen);
-  const tag = ciphertext.subarray(ciphertext.length - tagLen);
-  const decipher = crypto.createDecipheriv("aes-256-gcm", key, iv, { authTagLength: tagLen });
-  decipher.setAuthTag(tag);
-  const dec = Buffer.concat([decipher.update(data), decipher.final()]);
-  return dec.toString("utf8");
-}
