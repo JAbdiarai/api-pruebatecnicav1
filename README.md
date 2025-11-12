@@ -22,10 +22,13 @@ Prueba tecnica para dinamycore
     `npm -v`
     `docker -v`
     `docker compose version`  
-    2. crear archivo .env en raiz de proyecto(api-pruebatecnicav1)
+      Debes ver versiones activas (Node ≥ 18, Docker ≥ 24).   
+
+    2. crear archivo .env en raiz de proyecto(api-pruebatecnicav1)  
+
     3. copiar lo que contiene example.env en .env y guardar
 
-    Debes ver versiones activas (Node ≥ 18, Docker ≥ 24).  
+
 🚀 2. Levantar los servicios desde la raíz del proyecto:
     `docker compose up -d --build`  
 🔍 3. Verifica que estén corriendo:  
@@ -36,10 +39,8 @@ Prueba tecnica para dinamycore
     a1b2c3d4e5f6   payments-api          Up 1 minute     0.0.0.0:3000->3000/tcp
     b2c3d4e5f6g7   postgres:16-alpine    Up 1 minute     0.0.0.0:5432->5432/tcp
 
-🧠 4. Inicializar la base de datos (Prisma)  
-    Ejecuta estos comandos dentro del contenedor de la API:  
-    `docker compose exec api npx prisma migrate deploy`  
-    `docker compose exec api npx prisma generate`  
+🧠 4. Ya puedes iniciar la pruebas :)  
+    usa el archivo TestPruebaTecnica.postman_collection que se encuentra en la raiz del proyecto para realizar peticiones en el api, se encuentran todas las pecticiones necesarias, para el funcionamiento de la app
 
 
 🔐 Medidas de seguridad implementadas
