@@ -1,0 +1,575 @@
+{
+	"info": {
+		"_postman_id": "6131fa39-ec2f-4588-9ace-d43afd2c8256",
+		"name": "TestPruebaTecnica",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "43252341"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"jagr0301@outlook.com\",\r\n    \"password\":\"123456\",\r\n    \"name\":\"Jesus Abdiarai\",\r\n    \"lastname\":\"Guillermo\",\r\n    \"role\":\"ADMIN\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/register",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {\r",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);\r",
+									"});\r",
+									"pm.test(\"Set token\", function() {\r",
+									"    pm.response.to.have.jsonBody(\"accessToken\");\r",
+									"    var json = JSON.parse(responseBody);\r",
+									"    pm.environment.set(\"token\", json.accessToken);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"jagr0301@outlook.com\",\r\n    \"password\":\"123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "getUsers",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/users",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getUserById",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/users/0f4ed67f-7fb9-42a8-9cc5-356cb59c93d6",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"0f4ed67f-7fb9-42a8-9cc5-356cb59c93d6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/users/0f4ed67f-7fb9-42a8-9cc5-356cb59c93d6",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"0f4ed67f-7fb9-42a8-9cc5-356cb59c93d6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateUser",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"jagr0301@outlook.com\",\r\n    \"name\":\"Jose Abdiarai\",\r\n    \"lastname\":\"Guillermo\",\r\n    \"role\":\"ADMIN\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/users/cacaf0d9-42dd-4c66-9d8a-088ef269944d",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"cacaf0d9-42dd-4c66-9d8a-088ef269944d"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Payment",
+			"item": [
+				{
+					"name": "payment-methods",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/payments/payment-methods",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"payments",
+								"payment-methods"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete payment-methods",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"brand\": \"VISA\",\r\n  \"pan\": \"4111111111111111\",\r\n  \"expMonth\": \"12\",\r\n  \"expYear\": \"2028\"\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/payments/payment-methods/02a25e46-ee87-4214-a0ca-4d422de90514",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"payments",
+								"payment-methods",
+								"02a25e46-ee87-4214-a0ca-4d422de90514"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create payment-methods",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"brand\": \"VISA\",\r\n  \"cardNumber\": \"4111111111111111\",\r\n  \"expMonth\": \"12\",\r\n  \"expYear\": \"2028\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/payments/payment-methods",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"payments",
+								"payment-methods"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "charge",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"transactionId\": \"4fab089d-cad5-45b7-8b34-bda6ee26bc24\",\r\n  \"paymentMethodId\": \"02a25e46-ee87-4214-a0ca-4d422de90514\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/payments/charge",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"payments",
+								"charge"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "refund",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{base_url}}/payments/refund/a4701c52-ac47-4ce8-9f1b-36dab84082ad",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"payments",
+								"refund",
+								"a4701c52-ac47-4ce8-9f1b-36dab84082ad"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "listpayments",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"transactionId\": \"4fab089d-cad5-45b7-8b34-bda6ee26bc24\",\r\n  \"paymentMethodId\": \"02a25e46-ee87-4214-a0ca-4d422de90514\"\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/payments/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"payments",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Transactions",
+			"item": [
+				{
+					"name": "create",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"amount\": 1299.99,\r\n  \"currency\": \"MXN\",\r\n  \"metadata\": {\r\n    \"description\": \"Compra de paquete premium\",\r\n    \"orderId\": \"ORD-20251111-001\",\r\n    \"customer\": {\r\n      \"name\": \"Juan Pérez\",\r\n      \"email\": \"juan.perez@example.com\",\r\n      \"phone\": \"+52 55 1234 5678\"\r\n    },\r\n    \"items\": [\r\n      { \"product\": \"Suscripción Premium\", \"quantity\": 1, \"unitPrice\": 1299.99 }\r\n    ],\r\n    \"paymentIntent\": \"charge\",\r\n    \"source\": \"web\"\r\n  }\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/transactions/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"transactions",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"amount\": 1299.99,\r\n  \"currency\": \"MXN\",\r\n  \"metadata\": {\r\n    \"description\": \"Compra de paquete premium\",\r\n    \"orderId\": \"ORD-20251111-001\",\r\n    \"customer\": {\r\n      \"name\": \"Juan Pérez\",\r\n      \"email\": \"juan.perez@example.com\",\r\n      \"phone\": \"+52 55 1234 5678\"\r\n    },\r\n    \"items\": [\r\n      { \"product\": \"Suscripción Premium\", \"quantity\": 1, \"unitPrice\": 1299.99 }\r\n    ],\r\n    \"paymentIntent\": \"charge\",\r\n    \"source\": \"web\"\r\n  }\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/transactions/4fab089d-cad5-45b7-8b34-bda6ee26bc24",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"transactions",
+								"4fab089d-cad5-45b7-8b34-bda6ee26bc24"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "list transactions",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/transactions/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"transactions",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/transactions/4fab089d-cad5-45b7-8b34-bda6ee26bc24",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"transactions",
+								"4fab089d-cad5-45b7-8b34-bda6ee26bc24"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/transactions/4fab089d-cad5-45b7-8b34-bda6ee26bc24",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"transactions",
+								"4fab089d-cad5-45b7-8b34-bda6ee26bc24"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
