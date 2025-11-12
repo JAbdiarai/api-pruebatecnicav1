@@ -15,6 +15,22 @@ services:
       interval: 5s
       timeout: 5s
       retries: 10
-
+api:
+    build: .
+    container_name: payments-api
+    ports:
+      - "3000:3000"
+    environment:
+      PORT: 3000
+      DATABASE_URL: postgresql://prueba:prueba@db:5432/payments?schema=public
+      JWT_ACCESS_SECRET: 20133648526bcf557e0d81218edddfe75f8d26aff5bdcc0874e23a8bbf97d16e0d4536e4898e50108cfc6499a10cc276b3c35dde3668ec7f32d39c58def48be0
+      JWT_REFRESH_SECRET: eb741b8ff3cecdccac02159dbb20422e41d92ed7a361adab36b0085ec440ed50cc270594d2a9fc12dd95a157553313f7f84ba98cbb358b80ccb36e6ce807fb5e
+      CRYPTO_KEY_HEX: 7a956d91269e3bdc6991ed5536d5ee01a60ef2afb66d1d03cec7e86f51e21f5f
+      CRYPTO_AUTH_TAG_LEN: 16
+    depends_on:
+      - db
+    volumes:
+      - .:/app
+    command: npm run dev
 volumes:
   pgdata:
