@@ -14,17 +14,19 @@ Prueba tecnica para dinamycore
     
     cd payments-api
 
+
 ⚙️ 1. Configura tu entorno  
 
-    1️⃣ Verifica que tengas instalados:  
+     1. Verifica que tengas instalados:  
     `node -v`
     `npm -v`
     `docker -v`
-    `docker compose version`
-
+    `docker compose version`  
+    2. crear archivo .env en raiz de proyecto(api-pruebatecnicav1)
+    3. copiar lo que contiene example.env en .env y guardar
 
     Debes ver versiones activas (Node ≥ 18, Docker ≥ 24).  
-🚀 2. Levantar los servicios desde la raíz del proyecto:  
+🚀 2. Levantar los servicios desde la raíz del proyecto:
     `docker compose up -d --build`  
 🔍 3. Verifica que estén corriendo:  
     `docker ps`  
