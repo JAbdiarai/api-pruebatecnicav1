@@ -6,7 +6,6 @@ RUN npm install
 
 COPY . .
 
-RUN npx prisma generate
-
+# No generar Prisma aquí, se hará en runtime con las variables de entorno
 EXPOSE 3000
 CMD ["npm", "run", "dev"]
