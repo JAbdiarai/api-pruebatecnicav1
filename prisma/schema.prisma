@@ -14,6 +14,8 @@ datasource db {
 }
 model User {
   id           String          @id @default(uuid())
+  name         String
+  lastname     String
   email        String          @unique
   passwordHash String
   role         String          @default("USER") // USER | ADMIN
@@ -58,7 +60,7 @@ model Payment {
   payment_method   Payment_Method  @relation(fields: [payment_method_id], references: [id])
   payment_method_id String
   status          String         // AUTHORIZED | CAPTURED | FAILED | REFUNDED
-  provider_ref     String?        // id devuelto por gateway
+  provider_ref     String?       
   created_at       DateTime       @default(now())
 }
 
